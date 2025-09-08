@@ -1,0 +1,1 @@
+savedcmd_/home/pi/rpi_project/kernel_space/tcrt5000_hal.ko := arm-linux-gnueabihf-ld -r -EL -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T arch/arm/module.lds -o /home/pi/rpi_project/kernel_space/tcrt5000_hal.ko /home/pi/rpi_project/kernel_space/tcrt5000_hal.o /home/pi/rpi_project/kernel_space/tcrt5000_hal.mod.o /home/pi/rpi_project/kernel_space/.module-common.o

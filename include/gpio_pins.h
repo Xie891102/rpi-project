@@ -1,9 +1,9 @@
 // Car Sensors GPIO Definitions
 
 // TRCT5000 循跡感測器 
-#define TCRT5000_LEFT 14
-#define TRRT5000_RIGHT 15
-#define TRCT5000_MIDDLE 27
+#define TCRT5000_LEFT 13
+#define TCRT5000_RIGHT 19
+#define TCRT5000_MIDDLE 26
 
 // L298N 馬達控制器
 #define ENA 2
