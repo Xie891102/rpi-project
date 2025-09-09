@@ -1,1 +1,0 @@
-savedcmd_/home/pi/rpi_project/kernel_space/tcrt5000_hal.mod := printf '%s\n'   tcrt5000_hal.o | awk '!x[$$0]++ { print("/home/pi/rpi_project/kernel_space/"$$0) }' > /home/pi/rpi_project/kernel_space/tcrt5000_hal.mod

@@ -3,12 +3,10 @@
 #include <linux/module.h>
 #include <linux/fs.h>
 #include <linux/uaccess.h>
-#include <linux/gpio.h>
-#include "gpio_pins.h"
+#include "pin_mapping.h"
 
 
 static int major;		// 定義全域major number
-
 
 
 // ---------- 檔案處理 -------------
@@ -25,9 +23,9 @@ static int tcrt5000_open(struct inode *inode, struct file *file){
 static ssize_t tcrt5000_read(struct file *file, char __user *buf, size_t count, loff_t *ppos ){
 	
 	// 1.讀取感測器(左中右)
-	int left = gpio_get_value(TCRT5000_LEFT);
-	int middle = gpio_get_value(TCRT5000_MIDDLE);
-	int right = gpio_get_value(TCRT5000_RIGHT);
+	int left = read_gpio(TCRT5000_LEFT);
+	int middle = read_gpio(TCRT5000_MIDDLE);
+	int right = read_gpio(TCRT5000_RIGHT);
 
 	printk(KERN_INFO "TCRT5000 Read -Left: %d, -Middle: %d, -Right: %d", left, middle, right);
 

@@ -1,1 +1,0 @@
-savedcmd_/home/pi/rpi_project/kernel_space/Module.symvers :=  scripts/mod/modpost -M -m -a      -o /home/pi/rpi_project/kernel_space/Module.symvers -T /home/pi/rpi_project/kernel_space/modules.order -i Module.symvers -e 
