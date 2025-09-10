@@ -4,7 +4,7 @@
 #include <linux/fs.h>
 #include <linux/uaccess.h>
 #include "pin_mapping.h"
-
+#include "tcrt5000_hal.h"
 
 static int major;		// 定義全域major number
 

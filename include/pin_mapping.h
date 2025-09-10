@@ -1,5 +1,11 @@
 // Car Sensors GPIO Definitions
 
+
+// UART ( Rpi4 <-> Pico w )
+// GPIO 14 TXD
+// GPIO 15 RXD
+
+
 // TRCT5000 循跡感測器 
 #define TCRT5000_LEFT 16
 #define GPIO16_FSEL  GPFSEL1
@@ -15,22 +21,17 @@
 
 
 // L298N 馬達控制器
-//#define ENA 2
-//#define IN1 3 
-//#define IN2 4
-//#define IN3 5
-//#define IN4 6
-//#define ENB 7
+
 
 // SRF05 超音波測距
 
 
 // LED 狀態燈
-//#define GREEN 18		// 綠燈(車輛正常行駛)
-//#define YELLOW 19		// 黃燈(異常狀況)
-//#define RED 20			// 紅燈(車輛停止)
-//#define ORANGE_LEFT 21		// 橘燈(左邊方向燈)
-//#define ORANGE_RIGHT 22		// 橘燈(右邊方向燈)
-//#define WHITE 23		// 白燈(倒車燈)
+//#define GREEN 		// 綠燈(車輛正常行駛)
+//#define YELLOW 		// 黃燈(異常狀況)
+//#define RED 			// 紅燈(車輛停止)
+//#define ORANGE_LEFT 		// 橘燈(左邊方向燈)
+//#define ORANGE_RIGHT 		// 橘燈(右邊方向燈)
+//#define WHITE 		// 白燈(倒車燈)
 
 

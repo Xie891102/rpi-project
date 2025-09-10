@@ -75,20 +75,20 @@ int read_gpio(int gpio){
 	
 	unsigned int val, bit;
 
+	// GPIO 0~31 讀取 GPLEV0 暫存器的輸入值   GPIO 32~53 讀取 GPLEV0 暫存器的值  
+	val = readl(gpio_base + GPLEV0);
+
 	switch(gpio){
 		case TCRT5000_LEFT:
-			val = readl(gpio_base + GPIO16_FSEL);	// 讀取 GPIO16 腳位的值  
-			bit = (val >> GPIO16_BIT_SHIFT) & 0X1;	// 將目標位元往右移，取最低位元作為 input 值
+			bit = (val >> 16) & 0X1;	// 取 GPIO16 位元	
 			return bit;
 
 		case TCRT5000_MIDDLE:
-			val = readl(gpio_base + GPIO17_FSEL);
-			bit = (val >> GPIO17_BIT_SHIFT) & 0X1;
+			bit = (val >> 17) & 0X1;	// 取 GPIO17 位元
 			return bit;
 
 		case TCRT5000_RIGHT:
-			val = readl(gpio_base + GPIO18_FSEL);
-			bit = (val >> GPIO18_BIT_SHIFT) & 0X1;
+			bit = (val >> 18) & 0X1;	// 取 GPIO18 位元
 			return bit;
 
 		default:
