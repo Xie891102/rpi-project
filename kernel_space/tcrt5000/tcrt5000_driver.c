@@ -35,17 +35,15 @@ static ssize_t tcrt5000_read(struct file *file, char __user *buf, size_t count, 
 
 	printk(KERN_INFO "TCRT5000 Read -Left: %d, -Middle: %d, -Right: %d", left, middle, right);
 
-	// 2.封裝成字串，例 "0 1 0\n"
+
+	// 2.封裝成字串，例 "010\n"
 	char msg[20];
-	int len = snprintf(msg, sizeof(msg), "%d %d %d\n", left, middle, right);
-
-	// 3.避免讀取重複 => 第一次讀取後 ppos > 0 ，返回0
-	if(*ppos > 0 || count < len) return 0;
+	int len = snprintf(msg, sizeof(msg), "%d%d%d\n", left, middle, right);
+ 
 	
-	// 4.複製到user space(cat /dev/trct5000時顯示)
+	// 3.將資料複製到user space(cat /dev/trct5000時顯示)
 	if(copy_to_user(buf, msg, len)) return -EFAULT;
-
-	*ppos = len;	// 更新讀取位置
+	
 	return len;	// 回傳實際讀到的字元數
 
 }	

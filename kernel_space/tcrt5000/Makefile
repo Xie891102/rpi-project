@@ -7,7 +7,7 @@ obj-m += tcrt5000_driver.o
 
 
 # 告訴編譯器 include/gpio_pins.h 的路徑
-EXTRA_CFLAGS += -I$(PWD)/../../include
+EXTRA_CFLAGS += -I$(PWD)/../kernel_include
 
 
 # 指定 kernel buld 目錄 ***********************

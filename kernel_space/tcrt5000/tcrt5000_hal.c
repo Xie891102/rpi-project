@@ -4,6 +4,7 @@
 #include <linux/io.h>		// insmod, readl, writel
 #include "pin_mapping.h"	// GPIO 暫存器 offset 定義(datasheet)
 #include "register_map.h"	// GPIO 暫存器 專案定義
+#include "tcrt5000_hal.h"	// 編譯器先看到有這個檔案存在，避免警告
 
 
 // kernel 的虛擬位址
