@@ -50,12 +50,7 @@ int tcrt5000_read(tcrt5000_data *data) {
 	// 3.結尾加上字串結束符號
 	buf[len] = '\0';
 
-	// 4.解析讀到的值 (傳回值小於3個值代表有問題)
-	//if(sscanf(buf, "%1d%1d%1d", &data->left, &data->middle, &data->right) != 3){
-	//	fprintf(stderr, "tcrt5000_read: 解析錯誤, buf= '%s'\n", buf);
-	//	return -1;
-	//}
-	
+	// 4.如果傳回值小於3個值代表有問題
 	if(len < 3){	
 		fprintf(stderr, "tcrt5000_read: 解析錯誤, buf= '%s'\n", buf);
 		return -1;

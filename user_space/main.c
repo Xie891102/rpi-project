@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <unistd.h>
-#include "sensors/tcrt5000.h"
+#include "sensors/includes.h"
 
 // 停止旗標
 int stop_flag = 0;
