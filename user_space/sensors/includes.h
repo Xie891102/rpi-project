@@ -16,6 +16,9 @@ typedef struct {
 } tcrt5000_data;
 
 
+// callback 型態
+typedef void(*tcrt5000_callback)(int code);
+
 // ------------ API 介面 -------------
 
 // 開啟裝置  回傳=> 0成功 -1失敗
