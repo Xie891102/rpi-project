@@ -6,7 +6,7 @@
 
 
 // Broker 設定
-#define MQTT_BROKER_IP "192.168.69.164"
+#define MQTT_BROKER_IP "192.168.69.162"
 #define MQTT_BROKER_PORT 9566
 
 // 訊息頻道(TOPIC)
