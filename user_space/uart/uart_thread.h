@@ -4,6 +4,10 @@
 
 #include <stddef.h>	// size_t
 
+typedef	void(*uart_rx_callback_t)(const char *data, size_t len);
+
+// 註冊
+void uart_set_rx_callback(uart_rx_callback_t cb);
 
 // 啟動uart thread
 int uart_thread_start(const char *device);

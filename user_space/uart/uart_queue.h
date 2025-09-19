@@ -6,7 +6,7 @@
 #include "uart.h"
 
 // 最大柱列長度
-#define UART_QUEUE_SIZE 32 
+#define UART_QUEUE_SIZE 64 
 
 
 // queue 結構體

@@ -6,11 +6,7 @@
 #include <unistd.h>
 #include "uart.h"
 #include "uart_queue.h"
-
-#ifdef MOCK_UART
-extern int mock_read(char *buf, size_t len);
-#define uart_read mock_read
-#endif
+#include "uart_thread.h"
 
 
 // 全域變數
@@ -19,7 +15,12 @@ static uart_queue_t rx_queue;	// rx queue存放接收到的資料
 static pthread_t tx_thread;	// tx thread執行緒
 static pthread_t rx_thread;	// rx thread執行緒
 static volatile int stop_flag = 0;	// 停止執行緒旗標 1停止 0運行
+static uart_rx_callback_t rx_callback = NULL;
 
+// 註冊 callback
+void uart_set_rx_callback(uart_rx_callback_t cb){
+	rx_callback = cb;
+}
 
 // RX 執行緒函式(read)
 static void* uart_rx_thread_func(void *arg){
@@ -34,11 +35,11 @@ static void* uart_rx_thread_func(void *arg){
 		if(n > 0){
 			buf[n] = '\0';	// 確保字串結尾
 			// 將獨到的資料放入 rx queue
-			if(queue_push(&rx_queue, buf) != 0){
-				fprintf(stderr, "RX queue 已滿，資料丟棄: %s\n", buf);
-			} else {
-				pthread_cond_signal(&rx_queue.cond);
-			}	
+			queue_push(&rx_queue, buf);		// 保留queue緩衝
+			if(rx_callback) rx_callback(buf, n);	// 事件驅動
+			
+			//	pthread_cond_signal(&rx_queue.cond);
+			
 		} else {
 			usleep(1000);	// 沒資料短暫休息，避免cpu空轉
 		}
@@ -140,7 +141,9 @@ int uart_send(const char *data){
 // Logic層呼叫: 非阻塞接收
 int uart_receive(char *buf, size_t buf_size){
 	if(queue_is_empty(&rx_queue)) return 0;	// 沒有資料
-	return queue_pop(&rx_queue, buf, buf_size);
+	int ret = queue_pop(&rx_queue, buf, buf_size);
+	printf("[DEBUG] uart_recieve pop success, queue count left= %d\n", rx_queue.count);
+	return ret;
 }
 
 

@@ -5,7 +5,7 @@
 #include <stddef.h>
 
 // 每次傳輸最大資料長度(和queue一樣)
-#define UART_DATA_MAX 32
+#define UART_DATA_MAX 128
 
 // 開啟 UART device 
 int uart_open(const char *device);

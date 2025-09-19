@@ -1,0 +1,35 @@
+#define PICO_LED 15
+int counter = 0;
+
+void setup() {
+    pinMode(PICO_LED, OUTPUT);
+    digitalWrite(PICO_LED, HIGH);      // 開機 LED 亮
+
+    Serial.begin(115200);   // USB → IDE debug
+    Serial1.begin(115200);  // GPIO UART → RPi
+}
+
+void loop() {
+    // 傳給 RPi
+    // Serial1.println("我是Pico，計數 = " + String(counter));
+
+    // 同時顯示在 IDE
+    Serial.print("Pico 已發送: \n");
+    // Serial.println(counter);
+
+    counter++;
+
+    // 檢查是否有來自 RPi 的訊息
+    if (Serial1.available()) {
+        String msg = Serial1.readStringUntil('\n');
+        msg.trim();
+        if (msg.length() > 0) {
+            // 顯示在 IDE
+            // Serial.println("Pico 收到: " + msg);
+            // 回傳給 RPi
+            Serial1.println("pico get it!");
+        }
+    }
+
+    delay(500);
+}
