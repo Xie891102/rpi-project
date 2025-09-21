@@ -1,29 +1,34 @@
 #!/bin/bash
 
-# é—œæ©Ÿè‡ªå‹•åŸ·è¡Œçš„è…³æœ¬ 
-# å¸è¼‰: ç´…å¤–ç·šå¾ªè·¡ + é¦¬é”æŽ§åˆ¶å™¨ + è¶…è²æ³¢æ¸¬è·
+# Á`¸}¥»¥\¯à(¨ø¸ü¼Ò²Õ): ¨Ì§Ç¨ø¸ü buzzer¡Btcrt5000¡BHC-SR04 (¶WÁnªi) 
+
+# ³]©w¼Ò²Õ¸}¥»©Ò¦bªº¸ê®Æ§¨
+SCRIPT_DIR="/home/pi/rpi_project/kernel_space/kernel_script"
+
+echo ">>> ¶}©l¨ø¸ü©Ò¦³¼Ò²Õ..."
 
 
-# å¸è¼‰ TCRT5000 Device Driver æ¨¡çµ„
-echo ">>> Unloading TCRT5000 Device Driver..."
-if lsmod | grep -q tcrt5000_driver; then
-	rmmod tcrt5000_driver
-	echo "TCRT5000 Device Driver Unload Successful"
-else 
-	echo "Warning! TCRT5000 Device Driver was not unloaded"
+# 1. ¨ø¸ü¸Á»ï¾¹ (Buzzer) ¼Ò²Õ
+if ! $SCRIPT_DIR/buzzy_unload.sh; then
+    echo "!!! buzzy_unload.sh ¨ø¸ü¥¢±Ñ"
+    exit 1   # ¦pªG¥¢±Ñ´Nµ²§ô¸}¥»
 fi
 
 
-
-
-# å¸è¼‰ TCRT5000 HAL æ¨¡çµ„ 
-echo ">>> Unloading TCRT5000 HAL..."
-if lsmod | grep -q tcrt5000_hal; then
-	rmmod tcrt5000_hal
-	echo "TCRT5000 HAL Unload Successful"
-else
-	echo "Warning! TCRT5000 HAL was not unloaded"
+# 2. ¨ø¸ü´`¸ñ·P´ú¾¹ (TCRT5000) ¼Ò²Õ
+if ! $SCRIPT_DIR/tcrt_unload.sh; then
+    echo "!!! tcrt_unload.sh ¨ø¸ü¥¢±Ñ"
+    exit 1
 fi
 
-echo ">>> Unload script finished"
 
+# 3. ¨ø¸ü¶WÁnªi¼Ò²Õ (HC-SR04)
+if ! $SCRIPT_DIR/hc_sr04_unload.sh; then
+    echo "!!! hc_sr04_unload.sh ¨ø¸ü¥¢±Ñ"
+    exit 1
+fi
+
+
+# 4. ¥þ³¡¼Ò²Õ³£¨ø¸ü¦¨¥\
+echo ">>> ©Ò¦³¼Ò²Õ¤w¦¨¥\¨ø¸ü¡I"
+exit 0

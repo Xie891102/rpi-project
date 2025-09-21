@@ -1,46 +1,34 @@
 #!/bin/bash
 
-# é–‹æ©Ÿè‡ªå‹•åŸ·è¡Œçš„è…³æœ¬ 
-# æŽ›è¼‰: ç´…å¤–ç·šå¾ªè·¡ + é¦¬é”æŽ§åˆ¶å™¨ + è¶…è²æ³¢æ¸¬è·
+# Á`¸}¥»¥\¯à(±¾¸ü¼Ò²Õ): ¨Ì§Ç¸ü¤J buzzer¡Btcrt5000¡BHC-SR04 (¶WÁnªi) 
+
+# ³]©w¼Ò²Õ¸}¥»©Ò¦bªº¸ê®Æ§¨ (Á×§K¦]¬°¸ô®|¤£¦P§ä¤£¨ìÀÉ®×)
+SCRIPT_DIR="/home/pi/rpi_project/kernel_space/kernel_script"
+
+echo ">>> ¶}©l¸ü¤J©Ò¦³¼Ò²Õ..."
 
 
-# 1.å®šç¾©æ¨¡çµ„è·¯å¾‘
-MODULE_DIR="/home/pi/rpi_project/modules"
-HAL_MODULE="$MODULE_DIR/tcrt5000_hal.ko"
-DRIVER_MODULE="$MODULE_DIR/tcrt5000_driver.ko"
-
-
-# 2. è¼‰å…¥ HAL æ¨¡çµ„
-echo ">>> Loading TCRT5000 HAL..."
-if ! (lsmod | grep -q tcrt5000_hal); then
-	insmod "$HAL_MODULE"			# è¼‰å…¥ hal.ko æ¨¡çµ„
-	echo "HAL loaded"
-else 
-	echo "HAL already loaded"		# è‹¥å·²è¼‰å…¥ é¡¯ç¤ºè¨Šæ¯
+# 1. ¸ü¤J¸Á»ï¾¹ (Buzzer) ¼Ò²Õ
+if ! $SCRIPT_DIR/buzzy_load.sh; then
+    echo "!!! buzzy_load.sh ¸ü¤J¥¢±Ñ"
+    exit 1   # ¦pªG¥¢±Ñ´Nµ²§ô¸}¥» (Á×§K«á­±¼Ò²Õ¦³¨Ì¿à«o¥X¿ù)
 fi
 
 
-
-# 3. è¼‰å…¥ Device Driver æ¨¡çµ„
-echo ">>> Loading TCRT5000 Device Driver..."
-if ! (lsmod | grep -q tcrt5000_driver); then
-	insmod "$DRIVER_MODULE"			# è¼‰å…¥ driver.ko æ¨¡çµ„
-	echo "Device Driver loaded"
-else
-	echo "Device Driver already loaded"	# è‹¥å·²è¼‰å…¥ é¡¯ç¤ºè¨Šæ¯
+# 2. ¸ü¤J´`¸ñ·P´ú¾¹ (TCRT5000) ¼Ò²Õ
+if ! $SCRIPT_DIR/tcrt_load.sh; then
+    echo "!!! tcrt_load.sh ¸ü¤J¥¢±Ñ"
+    exit 1
 fi
 
 
-
-# 4. æª¢æŸ¥æ‰€æœ‰æ¨¡çµ„æ˜¯å¦æœ‰å¤±æ•—çš„
-if ! (lsmod | grep -q tcrt5000_hal); then 
-	echo "TCRT5000 HAL load failed!Please check out"
-elif ! (lsmod | grep -q tcrt5000_driver); then
-	echo "Tcrt5000 Device Driver load failed!Please check out"
-else
-	echo ">>> All modules load successed"
+# 3. ¸ü¤J¶WÁnªi¼Ò²Õ (HC-SR04)
+if ! $SCRIPT_DIR/hc_sr04_load.sh; then
+    echo "!!! hc_sr04_load.sh ¸ü¤J¥¢±Ñ"
+    exit 1
 fi
 
 
-
-
+# 4. ¥þ³¡¼Ò²Õ³£¸ü¤J¦¨¥\
+echo ">>> ©Ò¦³¼Ò²Õ¤w¦¨¥\¸ü¤J¡I"
+exit 0
