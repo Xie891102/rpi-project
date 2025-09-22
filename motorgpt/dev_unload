@@ -1,0 +1,17 @@
+#!/bin/sh
+echo 0 > /sys/class/pwm/pwmchip0/pwm0/enable
+echo 'Unexport the pwm0'
+echo 0 > /sys/class/pwm/pwmchip0/unexport
+echo 1 > /sys/class/pwm/pwmchip0/unexport
+
+
+module="motorv1.ko"
+device="motor"
+
+# invoke rmmod with all arguments we got
+/sbin/rmmod $module || exit 1
+
+# Remove stale nodes
+
+rm -f /dev/${device}*
+

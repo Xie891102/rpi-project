@@ -1,0 +1,53 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+
+    fragment@0 {
+        target = <&pwm>;
+        __overlay__ {
+            status = "okay";
+            pinctrl-names = "default";
+            pinctrl-0 = <&pwm0_gpio18_19>;
+        };
+    };
+
+    fragment@1 {
+        target = <&gpio>;
+        __overlay__ {
+            pwm0_gpio18_19: pwm0_gpio18_19 {
+                brcm,pins = <18 19>;           /* GPIO18=PWM0_0, GPIO19=PWM0_1 */
+                brcm,function = <2>;           /* Alt5: PWM功能 */
+                brcm,pull = <0>;               /* 無上拉下拉 */
+            };
+        };
+    };
+
+    fragment@2 {
+        target-path = "/soc";
+        __overlay__ {
+            motor: motor {
+                    // 與驅動程式匹配
+                compatible = "motor";           
+                
+                // PWM 配置：使用 PWM0 的兩個通道 
+                pwms = <&pwm 0 200000 0>,    
+                       <&pwm 1 200000 0>;     
+                pwm-names = "pwm0", "pwm1";     
+                
+                /* PWM 參數設定 */
+                period-ns = <200000>;         
+                duty-ns = <100000>;                     
+
+                // GPIO 配置
+                in1-gpios = <&gpio 17 0>;
+                in2-gpios = <&gpio 27 0>;
+                in3-gpios = <&gpio 22 0>;
+                in4-gpios = <&gpio 23 0>;
+
+                status = "okay";
+            };
+        };
+    };
+
+};

@@ -1,34 +1,40 @@
 #!/bin/bash
 
-# Á`¸}¥»¥\¯à(¨ø¸ü¼Ò²Õ): ¨Ì§Ç¨ø¸ü buzzer¡Btcrt5000¡BHC-SR04 (¶WÁnªi) 
+# ç¸½è…³æœ¬(å¸è¼‰æ¨¡çµ„): ä¾åºå¸è¼‰ buzzerã€tcrt5000(ç´…å¤–ç·š)ã€hc-sr04(è¶…è²æ³¢)ã€é¦¬é”æŽ§åˆ¶å™¨
 
-# ³]©w¼Ò²Õ¸}¥»©Ò¦bªº¸ê®Æ§¨
+# è¨­å®šæ¨¡çµ„è…³æœ¬æ‰€åœ¨çš„è³‡æ–™å¤¾
 SCRIPT_DIR="/home/pi/rpi_project/kernel_space/kernel_script"
 
-echo ">>> ¶}©l¨ø¸ü©Ò¦³¼Ò²Õ..."
+echo ">>> é–‹å§‹å¸è¼‰æ‰€æœ‰æ¨¡çµ„..."
 
 
-# 1. ¨ø¸ü¸Á»ï¾¹ (Buzzer) ¼Ò²Õ
+# 1. å¸è¼‰èœ‚é³´å™¨(Buzzer)æ¨¡çµ„
 if ! $SCRIPT_DIR/buzzy_unload.sh; then
-    echo "!!! buzzy_unload.sh ¨ø¸ü¥¢±Ñ"
-    exit 1   # ¦pªG¥¢±Ñ´Nµ²§ô¸}¥»
+    echo "[ERROR] buzzy_unload.sh å¸è¼‰å¤±æ•—"
+    exit 1   # å¦‚æžœå¤±æ•—çµæŸè…³æœ¬
 fi
 
 
-# 2. ¨ø¸ü´`¸ñ·P´ú¾¹ (TCRT5000) ¼Ò²Õ
+# 2. å¸è¼‰å¾ªè·¡æ¸¬å™¨(tcrt5000)æ¨¡çµ„
 if ! $SCRIPT_DIR/tcrt_unload.sh; then
-    echo "!!! tcrt_unload.sh ¨ø¸ü¥¢±Ñ"
+    echo "[ERROR] tcrt_unload.sh å¸è¼‰å¤±æ•—"
     exit 1
 fi
 
 
-# 3. ¨ø¸ü¶WÁnªi¼Ò²Õ (HC-SR04)
+# 3. å¸è¼‰è¶…è²æ³¢ (HC-SR04)
 if ! $SCRIPT_DIR/hc_sr04_unload.sh; then
-    echo "!!! hc_sr04_unload.sh ¨ø¸ü¥¢±Ñ"
+    echo "[ERROR] hc_sr04_unload.sh å¸è¼‰å¤±æ•—"
+    exit 1
+fi
+
+# 4. å¸è¼‰é¦¬é”æŽ§åˆ¶å™¨(l298n)
+if ! $SCRIPT_DIR/motor_unload.sh; then
+    echo "[ERROR] motor_unload.sh å¸è¼‰å¤±æ•—"
     exit 1
 fi
 
 
-# 4. ¥þ³¡¼Ò²Õ³£¨ø¸ü¦¨¥\
-echo ">>> ©Ò¦³¼Ò²Õ¤w¦¨¥\¨ø¸ü¡I"
+# 5. å…¨éƒ¨æ¨¡çµ„å¸è¼‰æˆåŠŸ
+echo ">>> æ‰€æœ‰æ¨¡çµ„å¸è¼‰æˆåŠŸ!"
 exit 0

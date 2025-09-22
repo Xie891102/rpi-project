@@ -12,24 +12,24 @@ static void __iomem *gpio_base;
 
 
 // 設定	GPIO16 為輸入腳位
-static void gpio16_set_input(void){
-	unsigned int val = readl(gpio_base + GPIO16_FSEL);	// 讀出 GPFSEL1
-       	val &= ~(0x7 << GPIO16_BIT_SHIFT);		// 清除對應 3 BITS	
-	writel(val, gpio_base + GPIO16_FSEL);	// 回寫 => 設為input
+static void gpio9_set_input(void){
+	unsigned int val = readl(gpio_base + GPIO9_FSEL);	// 讀出 GPFSEL1
+       	val &= ~(0x7 << GPIO9_BIT_SHIFT);		// 清除對應 3 BITS	
+	writel(val, gpio_base + GPIO9_FSEL);	// 回寫 => 設為input
 }
 
-// 設定 GPIO17 為輸入腳位
-static void gpio17_set_input(void){
-	unsigned int val = readl(gpio_base + GPIO17_FSEL);
-	val &= ~(0x7 << GPIO17_BIT_SHIFT);
-	writel(val, gpio_base + GPIO17_FSEL);
+// 設定 GPIO10 為輸入腳位
+static void gpio10_set_input(void){
+	unsigned int val = readl(gpio_base + GPIO10_FSEL);
+	val &= ~(0x7 << GPIO10_BIT_SHIFT);
+	writel(val, gpio_base + GPIO10_FSEL);
 }
 
-// 設定 GPIO18 為輸入腳位
-static void gpio18_set_input(void){
-	unsigned int val = readl(gpio_base + GPIO18_FSEL);
-	val &= ~(0x7 << GPIO18_BIT_SHIFT);
-	writel(val, gpio_base + GPIO18_FSEL);
+// 設定 GPIO11 為輸入腳位
+static void gpio11_set_input(void){
+	unsigned int val = readl(gpio_base + GPIO11_FSEL);
+	val &= ~(0x7 << GPIO11_BIT_SHIFT);
+	writel(val, gpio_base + GPIO11_FSEL);
 }
 
 
@@ -44,9 +44,9 @@ static int __init tcrt5000_init(void){
 	}	
 
 	// 2. 設定 3 個感測器的 GPIO 腳位為輸入模式
-	gpio16_set_input();	// 左
-	gpio17_set_input();	// 中
-	gpio18_set_input();	// 右
+	gpio9_set_input();	// 左
+	gpio10_set_input();	// 中
+	gpio11_set_input();	// 右
 				
 	// 3. 初始化完成
 	printk(KERN_INFO "TCRT5000 HAL initialized\n");
@@ -81,15 +81,15 @@ int read_gpio(int gpio){
 
 	switch(gpio){
 		case TCRT5000_LEFT:
-			bit = (val >> 16) & 0X1;	// 取 GPIO16 位元	
+			bit = (val >> 9) & 0X1;		// 取 GPIO9 位元	
 			return bit;
 
 		case TCRT5000_MIDDLE:
-			bit = (val >> 17) & 0X1;	// 取 GPIO17 位元
+			bit = (val >> 10) & 0X1;	// 取 GPIO10 位元
 			return bit;
 
 		case TCRT5000_RIGHT:
-			bit = (val >> 18) & 0X1;	// 取 GPIO18 位元
+			bit = (val >> 11) & 0X1;	// 取 GPIO11 位元
 			return bit;
 
 		default:
@@ -97,6 +97,7 @@ int read_gpio(int gpio){
 			return -1;
 	}
 }
+
 
 // 匯出給其他 kernel module 使用
 EXPORT_SYMBOL(read_gpio);

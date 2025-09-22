@@ -1,0 +1,30 @@
+#!/bin/sh
+
+B26=`uname -r|cut -d'.' -f2`
+if [ "$B26" -eq "4" ]; then
+  module="/home/pi/rpi_project/modules/motorv1.o"
+else
+  module="/home/pi/rpi_project/modules/motorv1.ko"
+fi
+
+device="motor"
+group="root"
+mode="66"
+
+sudo dtoverlay motor
+
+# invoke insmod with all arguments we got
+/sbin/insmod $module || exit 1
+
+major=`cat /proc/devices | awk "\\$2==\"$device\" {print \\$1}"`
+
+echo "Major number = $major"
+
+rm -f /dev/${device}*
+mknod "/dev/${device}0" c $major 0
+mknod "/dev/${device}1" c $major 1
+
+chgrp $group /dev/${device}*
+chmod $mode  /dev/${device}*
+
+
