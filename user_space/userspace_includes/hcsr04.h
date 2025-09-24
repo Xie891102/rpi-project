@@ -1,5 +1,8 @@
 #ifndef __HCSR04_H__
 #define __HCSR04_H__
+#define HC_SR04_SET_TRIGGER  _IOW('U', 0, int)
+#define HC_SR04_SET_ECHO     _IOW('U', 1, int)
+
 
 // 單顆超聲波的距離資料
 typedef struct {
@@ -11,7 +14,6 @@ typedef struct {
 typedef struct {
     hcsr04_data ultrasonic[4]; // ultrasonic[0]~[3]
 } hcsr04_all_data;
-
 
 // callback 型態，由邏輯層實作
 typedef void(*hcsr04_callback)(hcsr04_all_data *data);

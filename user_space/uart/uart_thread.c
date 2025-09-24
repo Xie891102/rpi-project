@@ -33,16 +33,14 @@ static void* uart_rx_thread_func(void *arg){
 		// 從 uart 讀資料
 		int n = uart_read(buf, sizeof(buf)-1);
 		if(n > 0){
-			buf[n] = '\0';	// 確保字串結尾
-			// 將獨到的資料放入 rx queue
-			queue_push(&rx_queue, buf);		// 保留queue緩衝
-			if(rx_callback) rx_callback(buf, n);	// 事件驅動
-			
-			//	pthread_cond_signal(&rx_queue.cond);
-			
+    			buf[n] = '\0';	// 確保字串結尾
+    			if(strlen(buf) > 0){  // 過濾空字串
+        			queue_push(&rx_queue, buf);	// 保留 queue 緩衝
+        			if(rx_callback) rx_callback(buf, n);	// 事件驅動
+    			}
 		} else {
-			usleep(1000);	// 沒資料短暫休息，避免cpu空轉
-		}
+    			usleep(1000);	// 沒資料短暫休息，避免 cpu 空轉
+		}		
 	}
 	return NULL;
 

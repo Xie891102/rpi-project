@@ -2,11 +2,14 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <unistd.h>
-#include "includes.h"
+#include <stdbool.h>
+
+#include "tcrt5000.h"
 
 
 tcrt5000_callback logic_cb = NULL;	// callback 指標
 int stop_flag = 0;
+bool node_active = false;
 
 // 印出 code(組合後)
 void test_cb(int code){

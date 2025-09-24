@@ -20,6 +20,7 @@ typedef struct {
 	Action *steps;	// 儲存動作陣列 [右轉, 直行...]
 	int length;	// 總步驟數
 	int current;	// 當前為第幾步 
+	int *node_type;	// 記錄每個節點類型
 } Route;
 
 

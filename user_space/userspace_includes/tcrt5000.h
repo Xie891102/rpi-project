@@ -1,7 +1,7 @@
 // 標頭檔- TCRT5000紅外線循跡街口
 
-#ifndef __INCLUDES_H__
-#define __INCLUDES_H__
+#ifndef __TCRT5000_H__
+#define __TCRT5000_H__
 
 
 // 循跡紅外線執行緒宣告
@@ -30,6 +30,8 @@ int tcrt5000_read(tcrt5000_data *data);
 // 關閉裝置  回傳=> 0成功 -1失敗
 int tcrt5000_close(void);
 
+// 執行緒的讀取資料 
+void* tcrt5000_thread_func(void* arg);
+
 
 #endif
-

@@ -35,9 +35,6 @@ typedef struct {
     int distance;
 } ultrasonic_data;
 
-typedef struct {
-    ultrasonic_data ultrasonic[4];
-} hcsr04_all_data;
 
 
 // ---------------- 打開四顆超聲波 ----------------
