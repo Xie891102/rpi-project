@@ -26,8 +26,8 @@ typedef struct {
 } motor_state_t;
 
 static motor_state_t motor_state = {
-    .left_speed = 40,
-    .right_speed = 40,
+    .left_speed = 50,
+    .right_speed = 50,
     .left_dir = 0,
     .right_dir = 0,
     .period_ns = 200000  // 20ms = 50Hz
@@ -434,34 +434,6 @@ void command_mode(int argc, char *argv[]) {
     }
 }
 
-int main(int argc, char *argv[]) {
-    printf("L298N 馬達控制程式啟動中...\n");
-    
-    /* 設定訊號處理 */
-    signal(SIGINT, cleanup_and_exit);   // Ctrl+C
-    signal(SIGTERM, cleanup_and_exit);  // 終止訊號
-    
-    /* 開啟馬達設備 */
-    if (open_motor_device() < 0) {
-        return 1;
-    }
-    
-    printf("馬達設備開啟成功\n");
-    
-    /* 設定預設PWM週期 */
-    set_pwm_period(motor_state.period_ns);
-    
-    /* 根據參數決定執行模式 */
-    if (argc == 1 || (argc == 2 && strcmp(argv[1], "interactive") == 0)) {
-        /* 無參數或指定interactive - 進入互動模式 */
-        set_raw_mode();
-        interactive_mode();
-    } else {
-        /* 有參數 - 指令模式 */
-        command_mode(argc, argv);
-    }
-    
-    /* 清理並結束 */
-    cleanup_and_exit(0);
-    return 0;
-}
+
+
+

@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <sys/ioctl.h>
 #include "buzzer_ioctl.h" 
-
+#define BUZZER_GPIO 6
 
 // 蜂鳴器描述檔
 static int fd = -1;  

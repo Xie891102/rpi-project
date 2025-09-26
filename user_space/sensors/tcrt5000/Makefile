@@ -1,5 +1,6 @@
 # Makefile for TCRT5000 User-Space Program
-# 會編譯出執行檔 tcrt5000 並放到 car_elf 目錄
+# 編譯出執行檔 tcrt5000 並放到 car_elf 目錄
+# 不刪除中間物件檔（.o）
 
 # 編譯器 & 選項
 CC := gcc
@@ -17,26 +18,26 @@ TARGET := tcrt5000
 TARGET_DIR := $(PWD)/../../car_elf
 
 # -----------------------------
-# 編譯 & 移動執行檔
+# 預設目標：編譯執行檔
 all: $(TARGET)
 	@echo "****** Compiling user-space program ******"
 	mkdir -p $(TARGET_DIR)
 	cp -v $(TARGET) $(TARGET_DIR)/
 	@echo "****** Executable copied to $(TARGET_DIR)/$(TARGET) ******"
-	$(MAKE) clean_objs
 
-# 編譯規則
+# 編譯規則：連結所有 .o 成最終執行檔
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^ -lpthread
 
+# .c -> .o 編譯規則
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-# 清理所有中間檔 & 執行檔
+# clean 只刪除最終執行檔，不刪除 .o
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -f $(TARGET)
 
-# 清理中間檔
+# 清理中間檔（如果真的需要手動刪）
 clean_objs:
 	rm -f $(OBJS)
 

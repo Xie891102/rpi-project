@@ -1,26 +1,24 @@
-# Makefile for L298N Motor User-space Controller
+# 編譯器與參數
+CC = gcc
+CFLAGS = -Wall -I$(HOME)/rpi_project/user_space/userspace_includes
 
-# �sĶ���P�з�
-CC := gcc
-INCLUDE_DIR := /home/pi/rpi_project/user_space/userspace_includes
+# 目標
+TARGET = test_motor
 
-CFLAGS := -I$(INCLUDE_DIR) -Wall
+# 原始碼
+SRCS = test_motor.c
+OBJS = $(SRCS:.c=.o)
 
-# �i�����ɦW��
-TARGET := motor_app
-
-# ��l�X�ɮ�
-SRCS := motor.c
-
-.PHONY: all clean
-
-# �w�]�ؼ�
+# 預設規則：編譯執行檔後印出 success
 all: $(TARGET)
+	@echo "*********** make success ***********"
 
-# �sĶ�i������
+# 編譯並產生執行檔 (編完後刪掉 .o)
 $(TARGET): $(SRCS)
-	$(CC) $(CFLAGS) -o $@ $(SRCS)
+	$(CC) $(CFLAGS) -c $(SRCS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
+	rm -f $(OBJS)
 
-# �M�z
+# 清除：刪掉執行檔與所有中間檔
 clean:
-	rm -f $(TARGET)
+	rm -f $(TARGET) $(OBJS)

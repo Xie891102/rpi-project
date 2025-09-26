@@ -34,6 +34,8 @@ int set_left_motor(int speed, int direction);
 // direction: 方向 (1=前進, -1=後退, 0=停止)
 int set_right_motor(int speed, int direction);
 
+// 程式結束時清理並關閉設備
+void cleanup_and_exit(int sig);
 
 // 顯示狀態 (可選, 用於 debug，例如印出速度/方向)
 void display_status(void);

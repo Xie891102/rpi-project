@@ -3,9 +3,19 @@
 #ifndef __TCRT5000_H__
 #define __TCRT5000_H__
 
+#include <stdbool.h>  // bool
+#include <pthread.h>
 
 // 循跡紅外線執行緒宣告
 void* tcrt5000_thread_func(void* arg);
+
+// callback 型態，必須先宣告
+typedef void(*tcrt5000_callback)(int code);
+
+// 全域變數宣告 (在 main.c 定義)
+extern volatile int stop_flag;
+extern bool node_active;
+extern tcrt5000_callback logic_cb;
 
 // ----------- 結構體 --------------
 // 存放回傳值 對應到 左中右

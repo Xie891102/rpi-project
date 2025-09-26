@@ -20,12 +20,12 @@ hcsr04_close_all();
 #define HC_SR04_DEV_FMT    "/dev/ultrasonic%d"
 #define HC_SR04_TRIG_0     0
 #define HC_SR04_ECHO_0     1
-#define HC_SR04_TRIG_1     2
-#define HC_SR04_ECHO_1     3
-#define HC_SR04_TRIG_2     4
-#define HC_SR04_ECHO_2     5
-#define HC_SR04_TRIG_3     6
-#define HC_SR04_ECHO_3     7
+#define HC_SR04_TRIG_1     4
+#define HC_SR04_ECHO_1     5
+#define HC_SR04_TRIG_2     6
+#define HC_SR04_ECHO_2     7
+#define HC_SR04_TRIG_3     12
+#define HC_SR04_ECHO_3     13
 // 四顆超聲波的檔案描述符
 static int fd[4] = {-1,-1,-1,-1};
 static const int trig_pins[HC_SR04_NUM] = { HC_SR04_TRIG_0, HC_SR04_TRIG_1, HC_SR04_TRIG_2, HC_SR04_TRIG_3 };

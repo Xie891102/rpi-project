@@ -8,7 +8,7 @@
 
 
 // 停止旗標 (main.c 定義)
-extern int stop_flag;
+extern volatile int stop_flag;
 extern bool node_active;
 
 
