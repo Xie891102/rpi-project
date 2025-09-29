@@ -35,7 +35,7 @@ typedef struct {
     int distance;
 } ultrasonic_data;
 
-
+hcsr04_callback distance_cb = NULL;
 
 // ---------------- 打開四顆超聲波 ----------------
 int hcsr04_open_all(void) {

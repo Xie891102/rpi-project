@@ -39,7 +39,7 @@ void* tcrt5000_thread_func(void* arg){
 		}	
 
 		// 2.控制循環讀取的平率 (50~100 ms)
-		usleep(50000);	// 50ms
+		usleep(20000);	// 20ms
 	}
 
 	return NULL;

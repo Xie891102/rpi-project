@@ -7,6 +7,7 @@
 #include <signal.h>
 #include <termios.h>
 #include <stdio.h>
+#include <pthread.h>
 #include "motor_gpio.h"
 
 
@@ -15,6 +16,8 @@
 /* 全域變數 */
 static int motor_fd = -1;
 static struct termios orig_termios;
+extern pthread_mutex_t motor_mutex;
+
 
 /* 馬達狀態結構 */
 typedef struct {
@@ -165,16 +168,25 @@ int set_right_motor(int speed, int direction) {
     return 0;
     }
 }
+
 /* 停止所有馬達 */
 int stop_all_motors(void) {
+	
+        int ret = 0;
+
+        pthread_mutex_lock(&motor_mutex); 	 // 上鎖，保護馬達操作
+
     if (ioctl(motor_fd, IOCTL_BOTH_STOP) < 0) {
         perror("停止馬達失敗");
         return -1;
-    }
-    motor_state.left_dir = 0;
-    motor_state.right_dir = 0;
-    printf("所有馬達已停止\n");
-    return 0;
+    } else {
+	motor_state.left_dir = 0;
+    	motor_state.right_dir = 0;
+  	printf("所有馬達已停止\n");
+    
+        }
+        pthread_mutex_unlock(&motor_mutex); 	// 解鎖
+    return ret;
 }
 
 /* ===== 預定義動作函數 ===== */

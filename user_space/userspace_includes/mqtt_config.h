@@ -10,10 +10,10 @@
 #define MQTT_BROKER_PORT 9566
 
 // 訊息頻道(TOPIC)
-#define MQTT_TOPIC_CAR		"statusMSG/car"		// 車子資訊
-#define MQTT_TOPIC_MAP		"statusMSG/map"		// 車子資訊
-#define MQTT_TOPIC_PARKING	"statusMSG/parking"		// 車子資訊
-#define MQTT_TOPIC_CALLING	"statusMSG/callingCar"		// 車子資訊
+#define MQTT_TOPIC_CAR		"statusMSG/car"		    	// 車子資訊
+#define MQTT_TOPIC_MAP		"statusMSG/map"			// 地圖資訊
+#define MQTT_TOPIC_PARKING	"statusMSG/parking"		// 停車位資訊
+#define MQTT_TOPIC_CALLING	"statusMSG/callingCar"		// 任務指示
 
 
 // 訂閱訊息的 callback 型態

@@ -37,6 +37,8 @@ int set_right_motor(int speed, int direction);
 // 程式結束時清理並關閉設備
 void cleanup_and_exit(int sig);
 
+extern pthread_mutex_t motor_mutex;
+
 // 顯示狀態 (可選, 用於 debug，例如印出速度/方向)
 void display_status(void);
 
