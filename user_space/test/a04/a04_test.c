@@ -75,7 +75,7 @@ int history_idx = 0;
 bool node_active = false;
 tcrt5000_callback logic_cb = NULL;
 
-pthread_mutex_t motor_mutex = PTHREAD_MUTEX_INITIALIZER;	// 互斥鎖(控制馬達)
+// pthread_mutex_t motor_mutex = PTHREAD_MUTEX_INITIALIZER;	// 互斥鎖(控制馬達)
 
 
 // ============================================================================
@@ -456,6 +456,14 @@ int main(){
 	
 
     node_active = false;
+
+	// ---------------- 初始化馬達 ----------------
+// 開啟馬達裝置
+    if (open_motor_device() < 0) {
+        fprintf(stderr, "[ERROR] 無法開啟馬達裝置\n");
+        return 1;
+    }
+
 
 	// ---------------- 初始化紅外線 ----------------
     if(tcrt5000_open() != 0){

@@ -120,7 +120,7 @@ void apply_motor_speed(int left_speed, int right_speed){
     right_speed = clamp_speed(right_speed);
     set_left_motor(left_speed, 1);
     set_right_motor(right_speed, 1);
-    printf("[MOTOR] 左輪:%d, 右輪:%d\n", left_speed, right_speed);
+   // printf("[MOTOR] 左輪:%d, 右輪:%d\n", left_speed, right_speed);
 }
 
 void reset_derail_counters(){
@@ -156,7 +156,7 @@ void handle_state(int code){
                         SPEED_INIT + SPEED_RECOVER,  // 左輪: 40 + 15 = 55
                         SPEED_INIT - SPEED_RECOVER   // 右輪: 40 - 15 = 25
                     );
-                    printf("  └ 使用「大幅右轉」模式 (太左偏恢復)\n");
+                   // printf("  └ 使用「大幅右轉」模式 (太左偏恢復)\n");
                 }
                 else if(last_valid == 3){  // 出軌前是「微左偏」
                     // 中等力道右轉即可
@@ -164,11 +164,11 @@ void handle_state(int code){
                         SPEED_INIT + SPEED_MAJOR,    // 左輪: 40 + 10 = 50
                         SPEED_INIT - SPEED_MAJOR     // 右輪: 40 - 10 = 30
                     );
-                    printf("  └ 使用「中度右轉」模式 (微左偏恢復)\n");
+                  //  printf("  └ 使用「中度右轉」模式 (微左偏恢復)\n");
                 }
                 else{  // 其他狀態 → 保守直行
                     apply_motor_speed(SPEED_INIT, SPEED_INIT);
-                    printf("  └ 使用「直行」模式 (未知狀態)\n");
+                 //   printf("  └ 使用「直行」模式 (未知狀態)\n");
                 }
                 
                 // 重置出軌計數器 (因為我們正在主動恢復)
@@ -179,7 +179,7 @@ void handle_state(int code){
             // 情境2: 有明確「右偏」趨勢 → 應該往左掃回
             // ================================================================
             else if(is_right_shift()){
-                printf("[出軌恢復] 檢測到右偏趨勢 → 執行左掃修正\n");
+              //  printf("[出軌恢復] 檢測到右偏趨勢 → 執行左掃修正\n");
                 
                 // 根據出軌前的狀態決定修正力道
                 if(last_valid == 4){  // 出軌前是「太右偏」
@@ -189,7 +189,7 @@ void handle_state(int code){
                         SPEED_INIT - SPEED_RECOVER,  // 左輪: 40 - 15 = 25
                         SPEED_INIT + SPEED_RECOVER   // 右輪: 40 + 15 = 55
                     );
-                    printf("  └ 使用「大幅左轉」模式 (太右偏恢復)\n");
+                //    printf("  └ 使用「大幅左轉」模式 (太右偏恢復)\n");
                 }
                 else if(last_valid == 6){  // 出軌前是「微右偏」
                     // 中等力道左轉即可
@@ -197,11 +197,11 @@ void handle_state(int code){
                         SPEED_INIT - SPEED_MAJOR,    // 左輪: 40 - 10 = 30
                         SPEED_INIT + SPEED_MAJOR     // 右輪: 40 + 10 = 50
                     );
-                    printf("  └ 使用「中度左轉」模式 (微右偏恢復)\n");
+                //    printf("  └ 使用「中度左轉」模式 (微右偏恢復)\n");
                 }
                 else{  // 其他狀態 → 保守直行
                     apply_motor_speed(SPEED_INIT, SPEED_INIT);
-                    printf("  └ 使用「直行」模式 (未知狀態)\n");
+                //    printf("  └ 使用「直行」模式 (未知狀態)\n");
                 }
                 
                 // 重置出軌計數器 (因為我們正在主動恢復)
@@ -212,7 +212,7 @@ void handle_state(int code){
             // 情境3: 無明確趨勢 → 累積計數,達標則停車
             // ================================================================
             else {
-                printf("[出軌警告] 無明確偏移趨勢,開始累積計數\n");
+            //    printf("[出軌警告] 無明確偏移趨勢,開始累積計數\n");
                 
                 // 根據最後狀態判斷是左偏還是右偏導致
                 if(last_valid == 1 || last_valid == 3){  
@@ -221,14 +221,14 @@ void handle_state(int code){
                     // ---------------------------------------------------
                     if(left_derail_count == 0){
                         left_derail_time = get_millis();  // 記錄起始時間
-                        printf("  └ 開始左偏出軌計時\n");
+              //          printf("  └ 開始左偏出軌計時\n");
                     }
                     left_derail_count++;
                     
                     long elapsed = get_millis() - left_derail_time;
-                    printf("[左偏累積] %d/%d 次 | 持續 %ld/%d ms\n",
-                           left_derail_count, DERAIL_SET_COUNT,
-                           elapsed, DERAIL_SET_TIME);
+             //       printf("[左偏累積] %d/%d 次 | 持續 %ld/%d ms\n",
+            //               left_derail_count, DERAIL_SET_COUNT,
+              //             elapsed, DERAIL_SET_TIME);
                     
                     // 仍嘗試往右掃回 (但不重置計數器)
                     apply_motor_speed(
@@ -255,14 +255,14 @@ void handle_state(int code){
                     // ---------------------------------------------------
                     if(right_derail_count == 0){
                         right_derail_time = get_millis();  // 記錄起始時間
-                        printf("  └ 開始右偏出軌計時\n");
+                //        printf("  └ 開始右偏出軌計時\n");
                     }
                     right_derail_count++;
                     
                     long elapsed = get_millis() - right_derail_time;
-                    printf("[右偏累積] %d/%d 次 | 持續 %ld/%d ms\n",
-                           right_derail_count, DERAIL_SET_COUNT,
-                           elapsed, DERAIL_SET_TIME);
+              //      printf("[右偏累積] %d/%d 次 | 持續 %ld/%d ms\n",
+               //            right_derail_count, DERAIL_SET_COUNT,
+               //            elapsed, DERAIL_SET_TIME);
                     
                     // 仍嘗試往左掃回 (但不重置計數器)
                     apply_motor_speed(
@@ -363,12 +363,12 @@ void logic(int code){
     history_idx = (history_idx + 1) % STATE_HISTORY;
     
     #ifdef DEBUG_MODE
-    printf("[LOGIC] 狀態:%d | 歷史:", code);
+ //   printf("[LOGIC] 狀態:%d | 歷史:", code);
     for(int i = 0; i < STATE_HISTORY; i++){
         int idx = (history_idx - 1 - i + STATE_HISTORY) % STATE_HISTORY;
-        printf("%d ", last_codes[idx]);
+ //       printf("%d ", last_codes[idx]);
     }
-    printf("\n");
+ //   printf("\n");
     #endif
     
     handle_state(code);
@@ -398,6 +398,13 @@ int main(){
 
     logic_cb = logic;
     node_active = false;
+
+// 開啟馬達裝置
+    if (open_motor_device() < 0) {
+        fprintf(stderr, "[ERROR] 無法開啟馬達裝置\n");
+        return 1;
+    }
+
 
     if(tcrt5000_open() != 0){
         fprintf(stderr, "[ERROR] TCRT5000 初始化失敗\n");

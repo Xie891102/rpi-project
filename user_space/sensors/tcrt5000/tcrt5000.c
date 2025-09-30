@@ -61,7 +61,7 @@ int tcrt5000_read(tcrt5000_data *data) {
 	data->right = buf[2] - '0';
 
 	// 成功
-	printf("tcrt5000 read successfully\n");
+	// printf("tcrt5000 read successfully\n");
 	return 0;
 }
 

@@ -16,7 +16,10 @@
 /* 全域變數 */
 static int motor_fd = -1;
 static struct termios orig_termios;
-extern pthread_mutex_t motor_mutex;
+
+
+pthread_mutex_t motor_mutex = PTHREAD_MUTEX_INITIALIZER;
+
 
 
 /* 馬達狀態結構 */

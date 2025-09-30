@@ -20,6 +20,8 @@ void turn_right(void);
 // 停車 (兩邊馬達都停止)
 int stop_all_motors(void);
 
+int open_motor_device(void);
+
 
 // 低階控制指令 (精細控制，適合微調 / 自訂行為)
 // -------------------------------------------------

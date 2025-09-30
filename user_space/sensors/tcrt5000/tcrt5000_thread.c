@@ -10,7 +10,7 @@
 // 停止旗標 (main.c 定義)
 extern volatile int stop_flag;
 extern bool node_active;
-
+extern tcrt5000_callback logic_cb;
 
 // callback 指標 (logic.c 定義)
 extern tcrt5000_callback logic_cb;
