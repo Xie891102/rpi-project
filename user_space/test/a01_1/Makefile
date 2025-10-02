@@ -21,7 +21,11 @@ TARGET = $(TARGET_DIR)/a01_1_test
 SRCS = a01_1_test.c \
        ../../sensors/motor/motor.c \
        ../../sensors/tcrt5000/tcrt5000.c \
-       ../../sensors/tcrt5000/tcrt5000_thread.c
+       ../../sensors/tcrt5000/tcrt5000_thread.c \
+       ../../uart/uart_queue.c \
+              ../../uart/uart_thread.c \
+               ../../uart/uart.c \
+
 
 # ========================
 # 編譯目標

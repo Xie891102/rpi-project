@@ -9,6 +9,7 @@
 
 #include "tcrt5000.h"   // 紅外線感測器模組 (循跡用)
 #include "motor_ctrl.h" // 馬達控制函式庫
+#include "uart_thread.h" 
  
 
 // ============================================================================
@@ -351,13 +352,16 @@ break;
         		// 1️.關閉紅外線 callback，避免掃回干擾
         		node_active = true;
 
+		uart_send("L"); // 開左燈
+
+
        	 	// 2️.停車並等待 1 秒讓車子穩定
         		stop_all_motors();
        	 	usleep(1000000);  // 1 秒
 
        	 	// 3️.執行轉彎函式
         		turn_left();      		 // 或 turn_right()，依你的路線設計
-        		usleep(1300000);  		// 1.3秒
+        		usleep(1200000);  		// 1.2秒
 
        	 	// 4️.停車確認角度
         		stop_all_motors();
@@ -365,6 +369,9 @@ break;
 
         		// 5️.開啟紅外線 callback，恢復循跡
         		node_active = false;
+
+uart_send("l"); // 關左燈
+
 
         		// 6️馬達直行
         		apply_motor_speed(SPEED_INIT, SPEED_INIT, 0);
@@ -430,6 +437,21 @@ int main(){
     logic_cb = logic;
     node_active = false;
 
+// 啟動 UART 執行緒
+    if(uart_thread_start("/dev/ttyS0") != 0){
+        fprintf(stderr, "[ERROR] UART 執行緒啟動失敗\n");
+        return -1;
+    }
+    printf("[OK] UART 執行緒啟動\n");
+
+// 啟動 UART 執行緒後
+usleep(200000);  // 等 0.2 秒，確保 PICO 端 Serial1 已啟動
+
+uart_send("r");  // 關紅燈
+usleep(50000);   // 等 50ms
+uart_send("l");  // 關左燈
+usleep(50000);   // 等 50ms
+
     // 開啟馬達裝置
     if (open_motor_device() < 0) {
         fprintf(stderr, "[ERROR] 無法開啟馬達裝置\n");
@@ -464,8 +486,12 @@ int main(){
 
     // 程式結束 → 清理資源
     printf("循跡車控制程式正常結束\n");
+
     pthread_join(tcrt_thread, NULL); // 等待感測器執行緒結束
     stop_all_motors();               // 停止馬達
+    uart_send("r"); // 關右燈
+    uart_send("l"); // 關左燈
+
     tcrt5000_close();                // 關閉感測器
     printf("[OK] 清理完成\n");
     return 0;

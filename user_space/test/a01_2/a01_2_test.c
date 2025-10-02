@@ -483,6 +483,10 @@ int main(){
         return -1;
     }
     printf("[OK] UART 執行緒啟動\n");
+uart_send("o");
+uart_send("i");
+uart_send("r");
+uart_send("l");
 
 
 // 初始化 MQTT

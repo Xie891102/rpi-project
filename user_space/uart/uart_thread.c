@@ -51,15 +51,16 @@ static void* uart_rx_thread_func(void *arg){
 static void* uart_tx_thread_func(void *arg){
 	
 	// 儲存要發送的資料
-	char buf[UART_DATA_MAX];
+	char buf[UART_DATA_MAX]="";
 	
 	while(!stop_flag){
 		
 		// 從 TX queue 取資料，如果 queue 空會阻塞等待 cond
 		queue_pop(&tx_queue, buf, sizeof(buf));
 		if(stop_flag) break;	// 停止旗標設置
-
+		
 		// 發送資料到 uart
+		printf("debug: %d\n", strlen(buf));
 		int n = uart_write(buf, strlen(buf));
 		if(n < 0){
 			perror("uart_write 失敗");
